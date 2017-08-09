@@ -43,7 +43,7 @@ RSpec.configure do |config|
 
   #Including to test requests
   config.include Request::JsonHelpers, :type => :controller
-  
+  config.include Request::HeadersHelpers, type: :controller
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
