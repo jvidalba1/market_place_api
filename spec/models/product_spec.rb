@@ -17,6 +17,8 @@ RSpec.describe Product, type: :model do
   it { is_expected.to validate_presence_of :user_id }
 
   it { is_expected.to belong_to(:user) }
+  it { is_expected.to have_many(:placements) }
+  it { is_expected.to have_many(:orders).through(:placements) }
 
   describe ".filter_by_title" do 
     before(:each) do
@@ -105,6 +107,13 @@ RSpec.describe Product, type: :model do
     context "when an empty hash is sent" do
       it "returns all the products" do
         expect(Product.search({})).to match_array([@product1, @product2, @product3, @product4])
+      end
+    end
+
+    context "when product_ids is present" do
+      it "returns the product from the ids" do
+        search_hash = { product_ids: [@product1.id, @product2.id]}
+        expect(Product.search(search_hash)).to match_array([@product1, @product2])
       end
     end
   end
