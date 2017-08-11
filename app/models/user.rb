@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   validates :auth_token, uniqueness: true
 
-  before_create :generate_authentication_token!
+  before_validation :generate_authentication_token!
 
   has_many :products, dependent: :destroy
 
