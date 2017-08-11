@@ -9,9 +9,6 @@
 #  updated_at :datetime         not null
 #
 
-FactoryGirl.define do
-  factory :order do
-    user
-    total 0
-  end
+class OrderSerializer < ActiveModel::Serializer
+  attributes :id
 end
