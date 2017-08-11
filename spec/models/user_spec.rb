@@ -29,7 +29,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  it { is_expected.to validate_uniqueness_of(:auth_token).ignoring_case_sensitivity }
+  # it { is_expected.to validate_uniqueness_of(:auth_token).ignoring_case_sensitivity }
 
   describe '#generate_authentication_token!' do 
     it "generates a unique token" do
