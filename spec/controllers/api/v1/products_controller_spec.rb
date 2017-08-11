@@ -38,6 +38,21 @@ RSpec.describe Api::V1::ProductsController, type: :controller do
       end
     end
 
+    context "when product_ids parameter is sent" do
+      before(:each) do
+        @user = FactoryGirl.create :user
+        3.times { FactoryGirl.create :product, user: @user }
+        get :index, params: { product_ids: @user.product_ids }, format: :json
+      end
+
+      it "returns just the products that belong to the user" do
+        products_response = json_response
+        products_response.each do |product_response|
+          expect(product_response[:user][:email]).to eql @user.email
+        end
+      end
+    end
+
     it { is_expected.to respond_with 200 }
   end
 
