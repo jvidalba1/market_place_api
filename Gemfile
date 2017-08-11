@@ -30,6 +30,7 @@ gem 'puma', '~> 3.7'
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'email_spec'
 end
 
 group :development, :test do

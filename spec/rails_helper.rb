@@ -20,6 +20,7 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+require 'email_spec'
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -41,7 +42,11 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
 
-  #Including to test requests
+  # Email spec
+  config.include(EmailSpec::Helpers)
+  config.include(EmailSpec::Matchers)
+
+  # Including to test requests
   config.include Request::JsonHelpers, :type => :controller
   config.include Request::HeadersHelpers, type: :controller
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
