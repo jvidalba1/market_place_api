@@ -13,7 +13,8 @@ RSpec.describe User, type: :model do
 
   it { should be_valid }
 
-  it { is_expected.to have_many(:products) }  
+  it { is_expected.to have_many(:products) }
+  it { is_expected.to have_many(:orders) }
 
   it { is_expected.to validate_confirmation_of :password }
   it { is_expected.to allow_value('example@domain.com').for(:email) }
