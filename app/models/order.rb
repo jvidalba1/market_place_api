@@ -18,6 +18,7 @@ class Order < ApplicationRecord
   validates :total, numericality: true
 
   validates :user_id, presence: true
+  validates_with EnoughProductsValidator
 
   before_validation :set_total!
 
