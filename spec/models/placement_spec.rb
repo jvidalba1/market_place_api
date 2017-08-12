@@ -22,4 +22,13 @@ RSpec.describe Placement, type: :model do
   it { is_expected.to belong_to :product }
 
   it { is_expected.to respond_to :quantity }
+
+  describe "#decrement_product_quantity!" do
+    it "decreases the product quantity by the placement quantity" do
+      product = placement.product
+      expect{
+        placement.decrement_product_quantity!
+      }.to change{ product.quantity }.by(-placement.quantity)
+    end
+  end
 end
