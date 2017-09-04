@@ -30,6 +30,7 @@ gem 'puma', '~> 3.7'
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'email_spec'
 end
 
 group :development, :test do
@@ -42,6 +43,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'pry-remote'
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

@@ -6,6 +6,7 @@ class Api::V1::SessionsController < ApplicationController
     user = User.find_by(email: user_email) if user_email.present?
 
     if user.valid_password? user_password
+      # binding.remote_pry
       sign_in user, store: false
       user.generate_authentication_token!
       user.save
