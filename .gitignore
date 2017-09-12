@@ -26,3 +26,6 @@ doc/
 .DS_Store
 .powenv
 /vendor/cache/*
+
+# Ignore application configuration
+/config/application.yml
