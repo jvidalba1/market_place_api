@@ -93,7 +93,7 @@ module Wrapper
           "vehicle_type": @kind_vehicle,
           "assured": "false",
           "assurance_value": "0",
-          "pick_date": "",
+          "pick_date": "", # 05/08/2017 7:30 pm
           "all_day": "false",
           "freezer": "false",
           "estimated_weight": "0"

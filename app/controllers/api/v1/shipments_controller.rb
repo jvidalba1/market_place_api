@@ -26,16 +26,25 @@ class Api::V1::ShipmentsController < ApplicationController
 
     services_ids = []
     errors = []
-    quantity.times do |t|
-      response = shipment.save
-      if response["response"]["errors"]
-        errors << response["response"]["errors"]
-      else
-        services_ids << response["data"]["shipment"]["shipment_id"]
+    if shipment.valid?
+      quantity.times do |t|
+        response = shipment.save
+        
+        if response["response"]
+          response["response"]["errors"].each {|error| errors.push(error)}
+        else
+          services_ids << response["data"]["shipment"]["shipment_id"]
+        end
       end
+    else
+      errors = shipment.errors.messages.map do |key, value|
+        value.map do |v|
+        "#{key.to_s} #{v}"
+        end
+      end.flatten
     end
   
-    if errors.flatten.uniq.any?
+    if errors.any?
       render json: { errors: errors.flatten.uniq }, status: 500
     else
       data = { "services_ids": services_ids }
