@@ -9,18 +9,13 @@ class Shipment < Wrapper::Base
   validates :quantity, presence: true, numericality: true
 
   def validate
-    shipment_ids = []
-    errors = []
-
     if self.valid?
-      quantity.times do |t|
-        response = self.save
-        
-        if response["response"]
-          response["response"]["errors"].each {|error| errors.push(error)}
-        else
-          shipment_ids << response["data"]["shipment"]["shipment_id"]
-        end
+      result_creation = creation
+
+      if result_creation[:valid]
+        shipments = confirmation(result_creation[:shipment_ids])
+      else
+        errors = result_creation["errors"]
       end
     else
       errors = self.errors.messages.map do |key, value|
@@ -30,10 +25,28 @@ class Shipment < Wrapper::Base
       end.flatten
     end
 
-    if errors.any? 
-      { valid: false, errors: errors }
-    else
-      { valid: true, shipment_ids: shipment_ids}
+    errors.nil? ? { valid: true, shipments: shipments } : { valid: false, errors: errors }
+  end
+
+  def creation
+    shipment_ids = []
+    errors = []
+
+    quantity.times do |t|
+      response = self.create
+      
+      if response["response"]
+        return { valid: false, errors: response["response"]["errors"] }
+        # response["response"]["errors"].each { |error| errors.push(error) }
+      else
+        shipment_ids << response["data"]["shipment"]["shipment_id"]
+      end
     end
+
+    { valid: true, shipment_ids: shipment_ids }
+  end
+
+  def confirmation(shipment_ids)
+    shipment_ids.map { |id| self.confirm(id.to_s) }
   end
 end

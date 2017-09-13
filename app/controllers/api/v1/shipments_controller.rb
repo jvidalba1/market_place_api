@@ -25,9 +25,9 @@ class Api::V1::ShipmentsController < ApplicationController
     })
     
     result = shipment.validate
-  
+    
     if result[:valid]
-      render json: result[:shipment_ids], status: 200
+      render json: result[:shipments], status: 200
     else
       render json: { errors: result[:errors].flatten.uniq }, status: 500
     end

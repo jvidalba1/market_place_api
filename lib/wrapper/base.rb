@@ -17,9 +17,14 @@ module Wrapper
       self.class.delete("/#{self.class.pluralized_resource}/#{self.id}.json")
     end
 
-    # Create a record in the API
-    def save
-      self.class.post("/#{self.class.pluralized_resource}.json", info)
+    # Create shipment in MP API
+    def create
+      self.class.post("/#{self.class.pluralized_resource}.json", info_create_shipment)
+    end
+
+    # Confirm shipment in MP API
+    def confirm(shipment_id)
+      self.class.post("/confirm_shipment", info_confirm_shipment(shipment_id))
     end
 
     # Class Methods
@@ -66,7 +71,7 @@ module Wrapper
 
     private
 
-    def info
+    def info_create_shipment
       {
         "shipment": {
           "from_contact_attributes": { # client information
@@ -110,8 +115,21 @@ module Wrapper
             }
           }
         },
-        "access_token": "0fad08f3e3e1eeb01d3b931f85f5336b25872cb9c75922e181503560d2daae71"
+        "access_token": access_token
       }.to_json
+    end
+
+    def info_confirm_shipment(id)
+      {
+        "shipment_id": id,
+        "credit_card": "8",
+        "installments": "1",
+        "access_token": access_token
+      }.to_json
+    end
+
+    def access_token
+      "0fad08f3e3e1eeb01d3b931f85f5336b25872cb9c75922e181503560d2daae71"
     end
   end
 end
