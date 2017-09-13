@@ -1,8 +1,5 @@
-class Shipment
-  def create(vehicle_type, client)
+class Shipment < Wrapper::Base
 
-  end
+  attr_accessor :kind_vehicle, :client_id, :kind_service, :bodywork
 
-  def confirm()
-  end
 end

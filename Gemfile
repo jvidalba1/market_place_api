@@ -31,6 +31,8 @@ gem 'puma', '~> 3.7'
 # Rails ENV variables configuration
 gem 'figaro'
 
+gem 'httparty'
+
 group :test do
   gem 'shoulda-matchers'
   gem 'email_spec'
